@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:todoey_flutter/widgets/tasks_list.dart';
+import 'package:todoey_flutter/screens/add_task_screen.dart';
 
 class TasksScreen extends StatelessWidget {
   @override
@@ -10,6 +11,18 @@ class TasksScreen extends StatelessWidget {
       floatingActionButton: FloatingActionButton(
         backgroundColor: Colors.lightBlueAccent,
         child: Icon(Icons.add),
+        onPressed: () {
+          showModalBottomSheet(
+            isScrollControlled: true,
+            context: context,
+            builder: (context) => SingleChildScrollView(
+              child: Container(
+                child: AddTaskScreen(),
+              ),
+            ),
+          );
+          print('button pressed');
+        },
       ),
       body: SafeArea(
         child: Column(
@@ -66,7 +79,14 @@ class TasksScreen extends StatelessWidget {
                     topRight: Radius.circular(20.0),
                   ),
                 ),
-                child: TasksList(),
+                child: Container(
+                  padding: EdgeInsets.only(
+                    left: 30.0,
+                    right: 30.0,
+                    top: 40.0,
+                  ),
+                  child: TasksList(),
+                ),
               ),
             ),
           ],
