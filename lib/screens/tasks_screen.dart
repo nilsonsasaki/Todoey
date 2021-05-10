@@ -2,21 +2,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:todoey_flutter/widgets/tasks_list.dart';
 import 'package:todoey_flutter/screens/add_task_screen.dart';
-import 'package:todoey_flutter/tasks/task.dart';
+import 'package:provider/provider.dart';
+import 'package:todoey_flutter/model/task_data.dart';
 
-class TasksScreen extends StatefulWidget {
-  @override
-  _TasksScreenState createState() => _TasksScreenState();
-}
-
-class _TasksScreenState extends State<TasksScreen> {
-  List<Task> tasks = [
-    Task(name: 'Buy Milk'),
-    Task(name: 'Buy Eggs'),
-    Task(name: 'Buy Bread'),
-  ];
-
-  @override
+class TasksScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.lightBlueAccent,
@@ -29,16 +18,10 @@ class _TasksScreenState extends State<TasksScreen> {
             context: context,
             builder: (context) => SingleChildScrollView(
               child: Container(
-                child: AddTaskScreen((newTaskTitle) {
-                  setState(() {
-                    tasks.add(Task(name: newTaskTitle));
-                    Navigator.pop(context);
-                  });
-                }),
+                child: AddTaskScreen(),
               ),
             ),
           );
-          print('button pressed');
         },
       ),
       body: SafeArea(
@@ -75,7 +58,7 @@ class _TasksScreenState extends State<TasksScreen> {
                     ),
                   ),
                   Text(
-                    '${tasks.length} Tasks',
+                    '${Provider.of<TaskData>(context).taskCount} Tasks',
                     style: TextStyle(
                       fontSize: 18.0,
                       color: Colors.white,
@@ -102,7 +85,8 @@ class _TasksScreenState extends State<TasksScreen> {
                     right: 30.0,
                     top: 40.0,
                   ),
-                  child: TasksList(tasks),
+                  child: TasksList(),
+                  //Provider.of<ProviderTasksList>(context).tasks),
                 ),
               ),
             ),
